@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chat with Doc by Genny</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+      .pre-answer{
+        text-align: left;white-space: pre-wrap; word-break: keep-all;
+        --tw-bg-opacity: 1;
+        background-color: rgba(247,247,248,var(--tw-bg-opacity));
+      }
+      .pre-question{
+        text-align: left;white-space: pre-wrap; word-break: keep-all;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+        <h1 class="visually-hidden">Heroes examples</h1>
+      
+        <div class="px-4 py-5 my-5 text-center">
+          <!-- <img class="d-block mx-auto mb-4" src="public/images/logo.png" alt="facesense logo" > -->
+          <h1 class="display-9 fw-bold">Ask Genny</h1>
+          <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">Chat with your Pdf</p>
+            <div class="card">
+              <div class="card-body">
+              <form>
+                  <div class="mb-3">
+                      <label class="form-label" for="customFile">Upload new pdf</label>
+                      <input type="file" class="form-control" id="customFile"  accept="pdf/*" capture="file">
+                  </div>
+              
+                  <button id="btnUpload" type="button" class="btn btn-primary btn-lg px-4 gap-3">Submit</button>
+                  
+              </form>
+              </div>
+            </div>
+            <div class="card gap-2" style="display: block;">
+              <div class="card-body">
+                <div class="block">Current document: <label id="lblcurrentdoc"></label></div>
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              <div class="block">
+                <div class="block-container-form-title container-form-title">                 
+                  <div class="content-editable-block history-block" contenteditable="true" placeholder="Form title" tabindex="0">
+                    
+                  </div>
+
+                </div>
+              </div>
+                
+            </div>
+
+            <div  class="d-grid gap-2 ">
+                <div class="form-floating mb-3">                    
+                    <input type="hidden" class="form-control" id="visitorid">
+                    <input type="text" class="form-control" id="txtprompt"  placeholder="Your questions">
+                    <label for="txtprompt">Prompt</label>
+                </div>
+            </div>
+            <div id="divResult" class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+             
+            </div>
+          </div>
+        
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="public/js/mandatory.js"></script>
+    <script src="public/js/prompt.js"></script>
+</body>
+</html>

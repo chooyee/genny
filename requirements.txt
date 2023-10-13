@@ -1,0 +1,7 @@
+langchain 
+pypdf 
+chromadb
+sentence-transformers
+sanic[ext]
+python-dotenv
+Jinja2
