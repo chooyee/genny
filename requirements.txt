@@ -1,4 +1,5 @@
 langchain 
+replicate
 pypdf 
 chromadb
 sentence-transformers
