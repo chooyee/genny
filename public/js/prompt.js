@@ -123,7 +123,7 @@ btnUpload.addEventListener('click', async (e)=>{
             divResult.appendChild(CreateErrorMsgCard(errMsg));
             btnUpload.disabled = false;
         });
-        txtprompt.disabled = true;
+        txtprompt.disabled = false;
         btnUpload.disabled = false;
         divResult.innerHTML = "";
         divResult.appendChild(CreateCard(result));
