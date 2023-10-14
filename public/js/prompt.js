@@ -92,11 +92,12 @@ txtprompt.addEventListener('keyup',async (e)=>{
 })
 
 btnUpload.addEventListener('click', async (e)=>{
-    btnUpload.disabled = true
-    var submit = MandatoryValidation()
+    btnUpload.disabled = true;
+    txtprompt.disabled = true;
+    var submit = MandatoryValidation();
     if (customFile.files.length < 1)
     {
-        alert("Please select a file to upload!")
+        alert("Please select a file to upload!");
     }
     if (submit)
     {      
@@ -119,13 +120,13 @@ btnUpload.addEventListener('click', async (e)=>{
         }).catch(async function (error) {
             errMsg =  await error
             console.log('Request failed', errMsg);
-            divResult.appendChild(CreateErrorMsgCard(errMsg))
-            btnUpload.disabled = false
+            divResult.appendChild(CreateErrorMsgCard(errMsg));
+            btnUpload.disabled = false;
         });
-
-        btnUpload.disabled = false
-        divResult.innerHTML = ""
-        divResult.appendChild(CreateCard(result))
+        txtprompt.disabled = true;
+        btnUpload.disabled = false;
+        divResult.innerHTML = "";
+        divResult.appendChild(CreateCard(result));
         //console.log(result)
 
     }   
@@ -142,31 +143,31 @@ function CreateCard(result)
     cardTitle.innerHTML = `Message: ${result.msg}`
     cardTitle.classList.add("card-title")
     const cardContent = document.createElement('p');
-    cardContent.innerHTML = `Elapsed time (seconds): ${result.elapsed_time}`
+    cardContent.innerHTML = `Elapsed time (seconds): ${result.elapsed_time}`;
 
-    cardBody.appendChild(cardTitle)
-    cardBody.appendChild(cardContent)
-    card.appendChild(cardBody)
-    return card
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardContent);
+    card.appendChild(cardBody);
+    return card;
 }
 
 function CreateErrorMsgCard(result)
 {
     const card = document.createElement('div');
-    card.classList.add("card")
+    card.classList.add("card");
     const cardBody = document.createElement('div');
-    cardBody.classList.add("card-body")
+    cardBody.classList.add("card-body");
     const cardTitle = document.createElement('h5');
-    cardTitle.innerHTML = `An Unexpected Error`
-    cardTitle.classList.add("card-title")
+    cardTitle.innerHTML = `An Unexpected Error`;
+    cardTitle.classList.add("card-title");
     const cardContent = document.createElement('p');
-    cardContent.innerHTML = `${result}`
+    cardContent.innerHTML = `${result}`;
 
    
-    cardBody.appendChild(cardTitle)
-    cardBody.appendChild(cardContent)
-    card.appendChild(cardBody)
-    return card
+    cardBody.appendChild(cardTitle);
+    cardBody.appendChild(cardContent);
+    card.appendChild(cardBody);
+    return card;
 }
 
 function getHistory()
