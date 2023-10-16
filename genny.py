@@ -46,7 +46,7 @@ def NewPdf(visitorid, fullPath, embeddings):
         # a16z-infra/llama13b-v2-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5
         # meta/llama-2-13b-chat:f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d
         llm = Replicate(
-            model="meta/llama-2-13b-chat:f4e2de70d66816a838a89eeeb621910adffb0dd0baba3976c96980970978018d",
+            model="meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3",
             input={"temperature": 1.25, "max_length": 4000, "max_new_tokens":4000}
         )
 
