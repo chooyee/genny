@@ -73,7 +73,7 @@ def NewPdf(visitorid, fullPath, embeddings):
         elapsed_time = end_time - start_time
         processTime["Generate Picke"] = str(elapsed_time)
 
-        processTimeJson = json.dump(processTime)
+        processTimeJson = json.dumps(processTime)
         print(processTimeJson)
         return pickleFile
     
