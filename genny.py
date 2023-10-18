@@ -1,4 +1,4 @@
-import os, shutil
+import os, shutil, time, json
 from sanic.log import logger
 from langchain.llms import Replicate
 from langchain.vectorstores import Chroma
@@ -15,23 +15,33 @@ def NewPdf(visitorid, fullPath, embeddings):
     logger.info('NewPdf: ' + visitorid)
 
     dataPath = f'./data/{visitorid}'
-
+    processTime = {}
     # if os.path.isdir(dataPath):
     #     shutil.rmtree(dataPath)
 
     try:
+        start_time = time.time()
         # load the document as before
         loader = PyPDFLoader(fullPath)
         documents = loader.load()
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        processTime["PyPDFLoader"] = str(elapsed_time)
 
+        start_time = time.time()
         #break docment into chunk
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=20)
         all_splits = text_splitter.split_documents(documents)
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        processTime["text_splitter"] = str(elapsed_time)
+
 
         #set embedding model
         # model_name = "sentence-transformers/all-mpnet-base-v2"
         # embeddings = HuggingFaceEmbeddings(model_name=model_name)
 
+        start_time = time.time()
         #embedding database
         vectordb = Chroma.from_documents(
             all_splits,
@@ -40,7 +50,11 @@ def NewPdf(visitorid, fullPath, embeddings):
         )
         
         vectordb.persist()
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        processTime["vectordb"] = str(elapsed_time)
 
+        start_time = time.time()
         # Initialize Replicate Llama2 Model
         # meta/llama-2-70b-chat:02e509c789964a7ea8736978a43525956ef40397be9033abf9fd2badfe68c9e3
         # a16z-infra/llama13b-v2-chat:df7690f1994d94e96ad9d568eac121aecf50684a0b0963b25a41cc40061269e5
@@ -55,7 +69,15 @@ def NewPdf(visitorid, fullPath, embeddings):
         with open(pickleFile, 'wb') as f:
             pickle.dump(llm, f)
 
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        processTime["Generate Picke"] = str(elapsed_time)
+
+        processTimeJson = json.dump(processTime)
+        print(processTimeJson)
         return pickleFile
+    
+       
     except Exception as e:
         logger.error(f'NewPdf error: {e}')
         raise
