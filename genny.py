@@ -49,7 +49,7 @@ def NewPdf(visitorid, fullPath, embeddings):
             persist_directory= dataPath
         )
         
-        vectordb.persist()
+        #vectordb.persist()
         end_time = time.time()
         elapsed_time = end_time - start_time
         processTime["vectordb"] = str(elapsed_time)
