@@ -2,13 +2,16 @@ import os, time, pickle, json
 from sanic.log import logger
 from langchain.chains import ConversationalRetrievalChain
 from langchain.vectorstores import Chroma
-
+from config.config import globalConfig
 
 os.environ['REPLICATE_API_TOKEN'] = "r8_0CITZrzocjRMungTi7uQFP68dsrcswX0ZJG1D"
 
-def Prompt(visitorid, query, chatHistory, embeddings):
+def Prompt(visitorid,doclabel, query, chatHistory, embeddings):
+
+    print (globalConfig["mysql"]["host"])
+
     processTime = {}
-    dataPath = f'./data/{visitorid}'
+    dataPath = f'./data/{doclabel}'
     picklePath = f'{dataPath}/llm.pickle'
     #convert to tuple
     chat_history = []

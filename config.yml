@@ -1,0 +1,5 @@
+mysql:
+  host: "139.162.31.55"
+  name: "gennydb"
+  user: "adjustdba"
+  pwd : "Alliance2024"

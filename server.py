@@ -27,9 +27,11 @@ WorkerManager.THRESHOLD = 20000  # 这个值对应着 0.1s
 
 #set embedding model
 model_name = "sentence-transformers/all-mpnet-base-v2"
+# model_name = "sentence-transformers/all-MiniLM-L6-v2"
 embeddings = HuggingFaceEmbeddings(model_name=model_name)
 
 app = Sanic(__name__, log_config=LOGGING_CONFIG)
+app.update_config("./config/config.py")
 app.config.CORS_ORIGINS = "*"
 Extend(app)
 app.config["DATA_FOLDER"] = "data"
@@ -46,6 +48,11 @@ async def prompt(request):
     result =Prompt(request.json["visitorid"], request.json["prompt"],request.json["chathistory"],embeddings)    
     return json(result)
 
+@app.get("/upload")
+@app.ext.template("upload.html")
+async def show_upload(request):
+    return {}
+
 @app.get("/hello")
 async def typed_handler(request: Request) -> HTTPResponse:
     return text("Done.")
@@ -54,11 +61,12 @@ async def typed_handler(request: Request) -> HTTPResponse:
 async def upload(request):
     dataFolder = app.config['DATA_FOLDER']
     visitorid = request.form.get('visitorid')
+    doclabel = request.form.get('txtdoclabel')
     fullPath = await write_to_file(dataFolder, request)
     # if os.path.exists(fullPath):
     #     print("File Exists:" + fullPath)
     # result = detect(fullPath)
-    pickle = NewPdf(visitorid, fullPath, embeddings)
+    pickle = NewPdf(doclabel, fullPath, embeddings)
     result = {}
     result["msg"] = "success"
     result["pickle"] = pickle

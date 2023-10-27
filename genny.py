@@ -4,17 +4,17 @@ from langchain.llms import Replicate
 from langchain.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
-
+from chromadb.utils import embedding_functions
 import pickle
 
 # Replicate API token
 os.environ['REPLICATE_API_TOKEN'] = "r8_0CITZrzocjRMungTi7uQFP68dsrcswX0ZJG1D"
 
-def NewPdf(visitorid, fullPath, embeddings):
+def NewPdf(doclabel, fullPath, embeddings):
     """Read the image into OpenCV then detect human face. Return as base64"""
-    logger.info('NewPdf: ' + visitorid)
+    logger.info('NewPdf: ' + doclabel)
 
-    dataPath = f'./data/{visitorid}'
+    dataPath = f'./data/{doclabel}'
     processTime = {}
     # if os.path.isdir(dataPath):
     #     shutil.rmtree(dataPath)
@@ -40,7 +40,8 @@ def NewPdf(visitorid, fullPath, embeddings):
         #set embedding model
         # model_name = "sentence-transformers/all-mpnet-base-v2"
         # embeddings = HuggingFaceEmbeddings(model_name=model_name)
-
+        #default_ef = embedding_functions.SentenceTransformerEmbeddingFunction(model_name="all-MiniLM-L6-v2")
+        # default_ef = embedding_functions.DefaultEmbeddingFunction()
         start_time = time.time()
         #embedding database
         vectordb = Chroma.from_documents(
@@ -49,7 +50,7 @@ def NewPdf(visitorid, fullPath, embeddings):
             persist_directory= dataPath
         )
         
-        #vectordb.persist()
+        vectordb.persist()
         end_time = time.time()
         elapsed_time = end_time - start_time
         processTime["vectordb"] = str(elapsed_time)
@@ -85,3 +86,6 @@ def NewPdf(visitorid, fullPath, embeddings):
 def getFileName(path_str):
     filename_without_ext = os.path.splitext(os.path.basename(path_str))[0]
     return filename_without_ext
+
+
+    

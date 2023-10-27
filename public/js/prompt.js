@@ -4,6 +4,7 @@ const hidvisitorid = document.getElementById('visitorid');
 const btnUpload = document.getElementById('btnUpload');
 const divResult = document.getElementById('divResult');
 const lblcurrentdoc = document.getElementById('lblcurrentdoc');
+const txtdoclabel  = document.getElementById('txtdoclabel');
 var chatHistory = [];
 
 document.addEventListener('DOMContentLoaded', function () { 
@@ -103,6 +104,7 @@ btnUpload.addEventListener('click', async (e)=>{
     {      
         let formData = new FormData(); 
         formData.append("visitorid", hidvisitorid.value);
+        formData.append("txtdoclabel", txtdoclabel.value);
         formData.append("file", customFile.files[0]);
         var req = new Request('upload/pdf', {
             method: 'post',
